@@ -2,39 +2,34 @@
 
 namespace Crm\Customers\Services;
 
+use Crm\Customers\Repositories\CustomerRepository;
 use Crm\Customers\Events\CustomerCreation;
 use Crm\Customers\Models\Customer;
 use Illuminate\Http\Request;
 
-/**
- * CustomerService - خدمة إدارة العملاء
- * الملف ده فيه كل العمليات الخاصة بالعملاء (إضافة، عرض، تعديل، حذف)
- */
+
 class CustomerService
 {
-
+    private CustomerRepository $customerRepository;
+    public function __construct(CustomerRepository $customerRepository)
+    {
+        $this->customerRepository = $customerRepository;
+    }
     public function index()
     {
         // جيب كل العملاء من قاعدة البيانات
-        return Customer::all();
+        return  $this->customerRepository->all();
     }
 
-    /**
-     * عرض عميل واحد بالـ ID
-     * @param int $id - رقم العميل
-     * @return Customer|JsonResponse
-     */
+
     public function show($id)
     {
         // دور على العميل، لو مش موجود ارجع رسالة 404
-        return Customer::find($id) ?? response()->json(['status' => 'Not found'], 404);
+        // return Customer::find($id) ?? response()->json(['status' => 'Not found'], 404);
+        return $this->customerRepository->find($id);
     }
 
-    /**
-     * إنشاء عميل جديد
-     * @param Request $request - البيانات اللي جاية من الـ Form
-     * @return Customer - العميل الجديد
-     */
+
     public function create(Request $request): Customer
     {
         // 1. إنشاء عميل جديد
@@ -48,7 +43,7 @@ class CustomerService
 
         // 3. إرسال حدث "تم إنشاء عميل جديد"
         // ده هينادي على NotifySalesOnCustomerCreation تلقائياً
-            // dd(\Event::getListeners(\Crm\Customers\Events\CustomerCreation::class));
+        // dd(\Event::getListeners(\Crm\Customers\Events\CustomerCreation::class));
 
         // event(new CustomerCreation($customer));
 
@@ -56,12 +51,6 @@ class CustomerService
         return $customer;
     }
 
-    /**
-     * تعديل بيانات عميل
-     * @param Request $request - البيانات الجديدة
-     * @param int $id - رقم العميل
-     * @return Customer|JsonResponse
-     */
     public function update(Request $request, $id)
     {
         // 1. جيب العميل من قاعدة البيانات
@@ -84,11 +73,7 @@ class CustomerService
         return $customer;
     }
 
-    /**
-     * حذف عميل
-     * @param int $id - رقم العميل
-     * @return JsonResponse
-     */
+
     public function delete($id)
     {
         // 1. جيب العميل

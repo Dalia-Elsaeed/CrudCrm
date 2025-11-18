@@ -1,6 +1,6 @@
 <?php
 
-namespace crm\Base\Requestes;
+namespace Crm\Base\Requestes;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -58,16 +58,16 @@ class ApiRequest extends FormRequest
      *
      * @return array<string, string>
      */
-    public function messages(): array
+    public function messages()
     {
-        // return [
-        //     'required' => 'The :attribute field is required.',
-        //     'min' => 'The :attribute must be at least :min characters.',
-        //     'max' => 'The :attribute may not be greater than :max characters.',
-        //     'email' => 'The :attribute must be a valid email address.',
-        //     'unique' => 'The :attribute has already been taken.',
-        //     'exists' => 'The selected :attribute is invalid.',
-        // ];
+        return [
+            'required' => 'The :attribute field is required.',
+            'min' => 'The :attribute must be at least :min characters.',
+            'max' => 'The :attribute may not be greater than :max characters.',
+            'email' => 'The :attribute must be a valid email address.',
+            'unique' => 'The :attribute has already been taken.',
+            'exists' => 'The selected :attribute is invalid.',
+        ];
     }
 
     /**

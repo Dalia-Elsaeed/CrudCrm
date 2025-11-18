@@ -56,9 +56,6 @@ class CustomerController extends Controller
     public function delete(int $id): JsonResponse
     {
         $result = $this->customerService->delete($id);
-
-        return response()->json([
-            'message' => 'Customer deleted successfully'
-        ], Response::HTTP_OK);
+        return response()->json(['message' => 'Customer deleted successfully'], Response::HTTP_OK);
     }
 }

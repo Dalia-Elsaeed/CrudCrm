@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Crm\Customers\Events\CustomerCreation;
 use Crm\Customers\Listeners\NotifySalesOnCustomerCreation;
 // use Crm\Customers\Listeners\SendWelcomeEmail;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,7 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->append(\App\Http\Middleware\RequestId::class);
+
+        $middleware->append(EnsureFrontendRequestsAreStateful::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
@@ -27,14 +30,9 @@ return Application::configure(basePath: dirname(__DIR__))
             NotifySalesOnCustomerCreation::class,
         );
 
-
         Event::listen(
             CustomerCreation::class,
             // SendWelcomeEmail::class,
         );
     })
-    ->withMiddleware(function (Middleware $middleware): void {
-    $middleware->append(\App\Http\Middleware\RequestId::class);
-})
-
     ->create();

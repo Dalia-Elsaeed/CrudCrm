@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    protected $fillable = [
-        'name',
+//     protected $fillable = [
+//         'name',
         // 'email',
         // 'phone',
-    ];
+//     ];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+//     protected $casts = [
+//         'created_at' => 'datetime',
+//         'updated_at' => 'datetime',
+//     ];
+// }
+
 }
