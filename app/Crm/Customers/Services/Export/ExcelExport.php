@@ -1,9 +1,9 @@
 <?php
 namespace Crm\Customers\Services\Export;
- class HtmlExport implements ExportInterface
+ class ExcelExport implements ExportInterface
  {
     public function export(array $data)
     {
-        dd('Html Export');
+        dd('Excel Export');
     }
  }

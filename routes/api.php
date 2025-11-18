@@ -6,7 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Request;
 
-Route::middleware('auth:sanctum')->get('/user', function(Request $request){
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 // Customers
@@ -14,6 +14,7 @@ Route::get('/customers', [CustomerController::class, 'index']);
 Route::post('/createCustomer', [CustomerController::class, 'create']);
 Route::get('/customers/{id}', [CustomerController::class, 'show']);
 Route::patch('/updateCustomer/{id}', [CustomerController::class, 'update']);
+Route::post('/customers/export', [CustomerController::class, 'export']);
 Route::delete('/customers/{id}', [CustomerController::class, 'delete']); // أضفت id
 
 

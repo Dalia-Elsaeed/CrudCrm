@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Crm\Customers\Services\CustomerExportService;
 use Crm\Customers\Services\CustomerService;
+use Crm\Customers\Services\Export\ExportFactory;
+use Crm\Customers\Services\Export\ExportInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 
+
 class CustomerController extends Controller
 {
     private CustomerService $customerService;
+    private CustomerExportService $customerExportService;
 
-    public function __construct(CustomerService $customerService)
+    public function __construct(CustomerService $customerService, CustomerExportService $customerExportService)
     {
         $this->customerService = $customerService;
+        $this->customerExportService = $customerExportService;
     }
 
     public function index(Request $request): JsonResponse
@@ -57,5 +63,11 @@ class CustomerController extends Controller
     {
         $result = $this->customerService->delete($id);
         return response()->json(['message' => 'Customer deleted successfully'], Response::HTTP_OK);
+    }
+    public function export(Request $request)
+    {
+        $format = $request->input('format', 'json');
+        $exporter = ExportFactory::instance($format);
+        return $this->customerExportService->export($exporter);
     }
 }

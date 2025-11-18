@@ -4,7 +4,7 @@ namespace Crm\Customers\Services\Export;
  {
     public function export(array $data)
     {
-        // throw new \Exception('Not implemented');
+        dd('Pdf Export');
     }
  }
 
