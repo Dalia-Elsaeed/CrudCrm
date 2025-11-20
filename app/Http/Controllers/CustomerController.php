@@ -9,6 +9,7 @@ use Crm\Customers\Services\Export\ExportInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Crm\Base\ResponseBuilder;
 
 
 class CustomerController extends Controller
@@ -22,14 +23,18 @@ class CustomerController extends Controller
         $this->customerExportService = $customerExportService;
     }
 
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
-        $customers = $this->customerService->index();
-        return response()->json($customers);
-    }
+        $customers = $this->customerService->index($request);
 
+        return (new ResponseBuilder())
+            ->setStatus(ResponseBuilder::STATUS_SUCCESS)
+            ->setData($customers->toArray()) // حول Collection لـ array
+            ->response();
+    }
     public function show(int $id): JsonResponse
     {
+
         $customer = $this->customerService->show($id);
         return response()->json($customer);
     }

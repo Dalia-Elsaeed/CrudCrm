@@ -15,7 +15,7 @@ Route::post('/createCustomer', [CustomerController::class, 'create']);
 Route::get('/customers/{id}', [CustomerController::class, 'show']);
 Route::patch('/updateCustomer/{id}', [CustomerController::class, 'update']);
 Route::post('/customers/export', [CustomerController::class, 'export']);
-Route::delete('/customers/{id}', [CustomerController::class, 'delete']); // أضفت id
+Route::delete('/deleteCustomer/{id}', [CustomerController::class, 'delete']); // أضفت id
 
 
 Route::post('createUser', [UserController::class, 'create']);
